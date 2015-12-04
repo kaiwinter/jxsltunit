@@ -1,0 +1,21 @@
+<xsltTestsuites xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="jxsltunit jxslttestsuite.xsd" xmlns="jxsltunit">
+
+	<xsltTestsuite description="Testsuite Test - 1"
+		xml="min-test.xml"
+		xslt="min-test.xslt"
+		path="pa > ch">
+		<xsltTestcase match_number="1">
+			<![CDATA[<ch>child 2</ch>]]>
+		</xsltTestcase>
+	</xsltTestsuite>
+	
+	<xsltTestsuite description="Testsuite Test - 2"
+		xml="min-test.xml"
+		xslt="min-test.xslt"
+		path="pa > ch">
+		<xsltTestcase match_number="0">
+			<![CDATA[<ch>child 1</ch>]]>
+		</xsltTestcase>
+	</xsltTestsuite>
+
+</xsltTestsuites>
