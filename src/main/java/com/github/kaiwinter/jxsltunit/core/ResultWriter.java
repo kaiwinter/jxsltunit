@@ -11,11 +11,11 @@ import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.IXsltTest;
  */
 public interface ResultWriter {
 
-    /**
-     * Writes the <code>xsltTest</code> to the output stream.
-     * 
-     * @param xsltTest
-     *            the {@link IXsltTest} result to write
-     */
-    void write(IXsltTest xsltTest) throws JAXBException, IOException;
+	/**
+	 * Writes the <code>xsltTest</code> to the output stream.
+	 * 
+	 * @param xsltTest
+	 *            the {@link IXsltTest} result to write
+	 */
+	void write(IXsltTest xsltTest) throws JAXBException, IOException;
 }

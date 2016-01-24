@@ -98,7 +98,8 @@ public final class XsltTestsuite implements IXsltTest {
 
 		boolean valid = validateTestDefinition();
 		if (!valid) {
-			throw new XsltTestError("Invalid test configuration: " + junitTestsuite.junitTestcase.get(0).error.systemError);
+			throw new XsltTestError(
+			        "Invalid test configuration: " + junitTestsuite.junitTestcase.get(0).error.systemError);
 		}
 
 		Path tempFileOutput = Files.createTempFile("xslttest", null);
@@ -150,7 +151,8 @@ public final class XsltTestsuite implements IXsltTest {
 	 * @param tempFileOutput
 	 *            the temporary file
 	 */
-	private void xslTransformXml(Path tempFileOutput) throws TransformerFactoryConfigurationError, TransformerException {
+	private void xslTransformXml(Path tempFileOutput)
+	        throws TransformerFactoryConfigurationError, TransformerException {
 		Source xmlInput = new StreamSource(new File(xml));
 		Source xsltInput = new StreamSource(new File(xslt));
 		Result xmlOutput = new StreamResult(tempFileOutput.toFile());
@@ -183,8 +185,9 @@ public final class XsltTestsuite implements IXsltTest {
 			LOGGER.info("Testing match number {}", element.matchNumber);
 
 			if (element.matchNumber > elementsToTest.size() - 1) {
-				String message = MessageFormat.format("Number of matches: {0} (highest index: {1}), test case wants match with index: {2}",
-						elementsToTest.size(), elementsToTest.size() - 1, element.matchNumber);
+				String message = MessageFormat.format(
+				        "Number of matches: {0} (highest index: {1}), test case wants match with index: {2}",
+				        elementsToTest.size(), elementsToTest.size() - 1, element.matchNumber);
 				throw new XsltTestError(message);
 			}
 			Element elementXslt = elementsToTest.get(element.matchNumber);
@@ -199,12 +202,13 @@ public final class XsltTestsuite implements IXsltTest {
 
 			// TODO KW: instead of outerHtml use html. Doing this needs to distinguish between html and text content.
 			Diff diff = DiffBuilder.compare(Input.fromString(element.content.toLowerCase())) //
-					.withTest(Input.fromString(elementXslt.outerHtml().toLowerCase())) //
-					.ignoreWhitespace() //
-					.build();
+			        .withTest(Input.fromString(elementXslt.outerHtml().toLowerCase())) //
+			        .ignoreWhitespace() //
+			        .build();
 			if (diff.hasDifferences()) {
 				Iterable<Difference> differences = diff.getDifferences();
-				String message = StreamSupport.stream(differences.spliterator(), false).map(s -> s.toString()).collect(Collectors.joining(", "));
+				String message = StreamSupport.stream(differences.spliterator(), false).map(s -> s.toString())
+				        .collect(Collectors.joining(", "));
 				testcase.error = new JunitTestcase.Error();
 				testcase.error.systemError = message;
 			}

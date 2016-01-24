@@ -28,8 +28,8 @@ public final class XsltTestUc {
 	 * @param resultWriters
 	 *            used to output the result, e.g. to console and/or a file
 	 */
-	public void runTests(File testDefinition, ResultWriter... resultWriters)
-			throws JAXBException, SAXException, TransformerFactoryConfigurationError, TransformerException, IOException {
+	public void runTests(File testDefinition, ResultWriter... resultWriters) throws JAXBException, SAXException,
+	        TransformerFactoryConfigurationError, TransformerException, IOException {
 		IXsltTest xsltTest = UnMarshallUtil.loadTestDefinition(testDefinition);
 
 		xsltTest.process();

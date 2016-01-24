@@ -12,21 +12,21 @@ import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.IXsltTest;
  */
 public final class XmlResultWriter implements ResultWriter {
 
-    private final OutputStream outputStream;
+	private final OutputStream outputStream;
 
-    /**
-     * Constructs a new {@link XmlResultWriter}.
-     * 
-     * @param outputStream
-     *            the {@link OutputStream} to {@link #write(IXsltTest)} to
-     */
-    public XmlResultWriter(OutputStream outputStream) {
-        this.outputStream = outputStream;
-    }
+	/**
+	 * Constructs a new {@link XmlResultWriter}.
+	 * 
+	 * @param outputStream
+	 *            the {@link OutputStream} to {@link #write(IXsltTest)} to
+	 */
+	public XmlResultWriter(OutputStream outputStream) {
+		this.outputStream = outputStream;
+	}
 
-    @Override
-    public void write(IXsltTest xsltTest) throws JAXBException, IOException {
-        xsltTest.writeResultAsXml(outputStream);
-    }
+	@Override
+	public void write(IXsltTest xsltTest) throws JAXBException, IOException {
+		xsltTest.writeResultAsXml(outputStream);
+	}
 
 }

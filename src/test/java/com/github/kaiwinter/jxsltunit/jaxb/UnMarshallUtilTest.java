@@ -58,7 +58,7 @@ public final class UnMarshallUtilTest {
 		XsltTestcase testcase = testsuite.xsltTestcase.get(0);
 		assertEquals(0, testcase.matchNumber);
 		assertEquals("<ch>child 1</ch>", testcase.content);
-		
+
 		// Testcase 2
 		testcase = testsuite.xsltTestcase.get(1);
 		assertEquals(1, testcase.matchNumber);

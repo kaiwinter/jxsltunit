@@ -31,7 +31,7 @@ public class Main {
 	 *             if no test file was passed or test file cannot be opened
 	 */
 	public static void main(String[] args) throws JAXBException, SAXException, TransformerFactoryConfigurationError,
-			TransformerException, IOException {
+	        TransformerException, IOException {
 
 		CommandLineArgs commandLineArgs = parseCommandLineArgs(args);
 		if (commandLineArgs != null) {
@@ -54,7 +54,7 @@ public class Main {
 	}
 
 	private static void start(CommandLineArgs commandLineArgs) throws JAXBException, SAXException,
-			TransformerFactoryConfigurationError, TransformerException, IOException {
+	        TransformerFactoryConfigurationError, TransformerException, IOException {
 
 		LOGGER.info("XML file with test specification: '{}'", commandLineArgs.config);
 		File file = new File(commandLineArgs.config);
