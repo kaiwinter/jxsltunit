@@ -1,4 +1,7 @@
 # jxsltUnit
+[![Build Status](https://api.travis-ci.org/kaiwinter/jxsltunit.svg)](https://travis-ci.org/kaiwinter/jxsltunit)
+[![Coverage Status](https://coveralls.io/repos/kaiwinter/jxsltunit/badge.svg?branch=master&service=github)](https://coveralls.io/github/kaiwinter/jxsltunit?branch=master)
+
 Unit tests for XSL Transformations.
 
 ## How to
