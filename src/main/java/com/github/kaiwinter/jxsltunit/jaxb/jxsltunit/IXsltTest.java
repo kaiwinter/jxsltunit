@@ -17,12 +17,15 @@ public interface IXsltTest {
 	/**
 	 * Runs the tests.
 	 *
+	 * @param workingDirectory
+	 *            the directory in which the xml and xsl is looked up
+	 *
 	 * @throws TestConfigurationException
 	 *             if the configuration contains errors
 	 * @throws ProcessingException
 	 *             if an error occurs while transforming the XML
 	 */
-	void process() throws TestConfigurationException, ProcessingException;
+	void process(String workingDirectory) throws TestConfigurationException, ProcessingException;
 
 	/**
 	 * Writes the result of this test suite(s) to the passed stream.

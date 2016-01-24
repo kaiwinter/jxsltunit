@@ -87,7 +87,7 @@ public final class XsltTestsuite implements IXsltTest {
 	}
 
 	@Override
-	public void process() throws TestConfigurationException, ProcessingException {
+	public void process(String workingDirectory) throws TestConfigurationException, ProcessingException {
 		if (xsltTestcase == null) {
 			throw new IllegalArgumentException("Uninitialized xsltTestcase");
 		} else if (description == null) {
@@ -96,7 +96,7 @@ public final class XsltTestsuite implements IXsltTest {
 			LOGGER.info("Parsed test specification '{}', number of matches: {}", description, xsltTestcase.size());
 		}
 
-		boolean valid = validateTestDefinition();
+		boolean valid = validateTestDefinition(workingDirectory);
 		if (!valid) {
 			throw new TestConfigurationException(
 			        "Invalid test configuration: " + junitTestsuite.junitTestcase.get(0).error.systemError);
@@ -106,7 +106,7 @@ public final class XsltTestsuite implements IXsltTest {
 			Path tempFileOutput = Files.createTempFile("xslttest", null);
 			LOGGER.trace("Using temp file: '{}'", tempFileOutput);
 
-			xslTransformXml(tempFileOutput);
+			xslTransformXml(workingDirectory, tempFileOutput);
 
 			runTests(tempFileOutput);
 		} catch (IOException | TransformerException e) {
@@ -117,18 +117,21 @@ public final class XsltTestsuite implements IXsltTest {
 	/**
 	 * Validates the passed test specification for sanity.
 	 *
+	 * @param workingDirectory
+	 *            the directory in which the xml and xsl is looked up
+	 *
 	 * @param xsltTest
 	 *            the test specification
 	 * @return
 	 */
-	private boolean validateTestDefinition() {
+	private boolean validateTestDefinition(String workingDirectory) {
 		Collection<String> errors = new ArrayList<>();
 
-		if (!new File(xml).exists()) {
+		if (!new File(workingDirectory, xml).exists()) {
 			String message = "XML not found (xml attribute): '" + xml + "'";
 			errors.add(message);
 		}
-		if (!new File(xslt).exists()) {
+		if (!new File(workingDirectory, xslt).exists()) {
 			String message = "XSL not found (xslt attribute): '" + xslt + "'";
 			errors.add(message);
 		}
@@ -155,9 +158,9 @@ public final class XsltTestsuite implements IXsltTest {
 	 * @param tempFileOutput
 	 *            the temporary file
 	 */
-	private void xslTransformXml(Path tempFileOutput) throws TransformerException {
-		Source xmlInput = new StreamSource(new File(xml));
-		Source xsltInput = new StreamSource(new File(xslt));
+	private void xslTransformXml(String workingDirectory, Path tempFileOutput) throws TransformerException {
+		Source xmlInput = new StreamSource(new File(workingDirectory, xml));
+		Source xsltInput = new StreamSource(new File(workingDirectory, xslt));
 		Result xmlOutput = new StreamResult(tempFileOutput.toFile());
 
 		Transformer transformer = TransformerFactory.newInstance().newTransformer(xsltInput);

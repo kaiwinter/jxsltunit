@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.github.kaiwinter.jxsltunit.exception.TestConfigurationException;
-import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.impl.XsltTestsuite;
 import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.impl.XsltTestsuite.XsltTestcase;
 
 public final class XsltTestsuiteTest {
@@ -27,7 +26,7 @@ public final class XsltTestsuiteTest {
 
 		testsuite.xsltTestcase = new ArrayList<>();
 		testsuite.xsltTestcase.add(testcase);
-		testsuite.process();
+		testsuite.process(null);
 
 		Assert.assertNull(testsuite.junitTestsuite.junitTestcase.get(0).error);
 	}
@@ -48,7 +47,7 @@ public final class XsltTestsuiteTest {
 
 		testsuite.xsltTestcase = new ArrayList<>();
 		testsuite.xsltTestcase.add(testcase);
-		testsuite.process();
+		testsuite.process(null);
 
 		Assert.fail("XsltTestError not thrown");
 	}
@@ -69,7 +68,7 @@ public final class XsltTestsuiteTest {
 
 		testsuite.xsltTestcase = new ArrayList<>();
 		testsuite.xsltTestcase.add(testcase);
-		testsuite.process();
+		testsuite.process(null);
 
 		Assert.fail("XsltTestError not thrown");
 	}
@@ -87,7 +86,7 @@ public final class XsltTestsuiteTest {
 		XsltTestcase testcase = new XsltTestcase();
 		testsuite.xsltTestcase = new ArrayList<>();
 		testsuite.xsltTestcase.add(testcase);
-		testsuite.process();
+		testsuite.process(null);
 
 		Assert.fail("XsltTestError not thrown");
 	}
@@ -105,7 +104,7 @@ public final class XsltTestsuiteTest {
 		XsltTestcase testcase = new XsltTestcase();
 		testsuite.xsltTestcase = new ArrayList<>();
 		testsuite.xsltTestcase.add(testcase);
-		testsuite.process();
+		testsuite.process(null);
 
 		Assert.fail("XsltTestError not thrown");
 	}
@@ -126,7 +125,7 @@ public final class XsltTestsuiteTest {
 
 		testsuite.xsltTestcase = new ArrayList<>();
 		testsuite.xsltTestcase.add(testcase);
-		testsuite.process();
+		testsuite.process(null);
 
 		String expected = "Expected text value 'child 2' but was 'child 1' - comparing <ch ...>child 2</ch> at /ch[1]/text()[1] to <ch ...>child 1</ch> at /ch[1]/text()[1] (DIFFERENT)";
 		Assert.assertEquals(expected, testsuite.junitTestsuite.junitTestcase.get(0).error.systemError);

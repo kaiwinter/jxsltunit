@@ -25,7 +25,7 @@ public final class XsltTestUc {
 	public void runTests(File testDefinition, ResultWriter... resultWriters) {
 		IXsltTest xsltTest = UnMarshallUtil.loadTestDefinition(testDefinition);
 
-		xsltTest.process();
+		xsltTest.process(testDefinition.getParent());
 
 		for (ResultWriter resultWriter : resultWriters) {
 			resultWriter.write(xsltTest);

@@ -29,10 +29,10 @@ public final class XsltTestsuites implements IXsltTest {
 	public List<XsltTestsuite> xsltTestsuite;
 
 	@Override
-	public void process() throws TestConfigurationException, ProcessingException {
+	public void process(String workingDirectory) throws TestConfigurationException, ProcessingException {
 		LOGGER.info("Running test suite, number of test cases: {}", xsltTestsuite.size());
 		for (XsltTestsuite test : xsltTestsuite) {
-			test.process();
+			test.process(workingDirectory);
 		}
 	}
 
