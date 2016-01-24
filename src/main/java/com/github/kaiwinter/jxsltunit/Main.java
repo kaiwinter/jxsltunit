@@ -5,16 +5,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import javax.xml.bind.JAXBException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactoryConfigurationError;
-
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.xml.sax.SAXException;
 
 import com.github.kaiwinter.jxsltunit.core.ResultWriter;
 import com.github.kaiwinter.jxsltunit.core.TextResultWriter;
@@ -27,11 +22,10 @@ public class Main {
 	/**
 	 * @param args
 	 *            the test file specification and output format
-	 * @throws IllegalArgumentException
+	 * @throws IOException
 	 *             if no test file was passed or test file cannot be opened
 	 */
-	public static void main(String[] args) throws JAXBException, SAXException, TransformerFactoryConfigurationError,
-	        TransformerException, IOException {
+	public static void main(String[] args) throws IOException {
 
 		CommandLineArgs commandLineArgs = parseCommandLineArgs(args);
 		if (commandLineArgs != null) {
@@ -53,8 +47,7 @@ public class Main {
 		return commandLineArgs;
 	}
 
-	private static void start(CommandLineArgs commandLineArgs) throws JAXBException, SAXException,
-	        TransformerFactoryConfigurationError, TransformerException, IOException {
+	private static void start(CommandLineArgs commandLineArgs) throws IOException {
 
 		LOGGER.info("XML file with test specification: '{}'", commandLineArgs.config);
 		File file = new File(commandLineArgs.config);

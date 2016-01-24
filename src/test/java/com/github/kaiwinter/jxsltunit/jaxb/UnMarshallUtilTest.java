@@ -6,16 +6,12 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import javax.xml.bind.JAXBException;
-
 import org.junit.Test;
-import org.xml.sax.SAXException;
 
-import com.github.kaiwinter.jxsltunit.jaxb.UnMarshallUtil;
 import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.IXsltTest;
 import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.XsltTestsuite;
-import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.XsltTestsuites;
 import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.XsltTestsuite.XsltTestcase;
+import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.XsltTestsuites;
 
 public final class UnMarshallUtilTest {
 
@@ -23,7 +19,7 @@ public final class UnMarshallUtilTest {
 	 * Asserts that a simple {@link XsltTestsuite} with one {@link XsltTestcase} is read correctly.
 	 */
 	@Test
-	public void testLoadTestsuite() throws JAXBException, SAXException, URISyntaxException {
+	public void testLoadTestsuite() throws URISyntaxException {
 		URL resource = getClass().getResource("/testsuite.xml");
 		File file = new File(resource.toURI());
 		IXsltTest xsltTest = UnMarshallUtil.loadTestDefinition(file);
@@ -42,7 +38,7 @@ public final class UnMarshallUtilTest {
 	 * Asserts that a simple {@link XsltTestsuite} with two {@link XsltTestcase}s is read correctly.
 	 */
 	@Test
-	public void testLoadTestsuiteMultipleTestcases() throws JAXBException, SAXException, URISyntaxException {
+	public void testLoadTestsuiteMultipleTestcases() throws URISyntaxException {
 		URL resource = getClass().getResource("/testsuite-multiple-testcases.xml");
 		File file = new File(resource.toURI());
 		IXsltTest xsltTest = UnMarshallUtil.loadTestDefinition(file);
@@ -70,7 +66,7 @@ public final class UnMarshallUtilTest {
 	 * each is read correctly.
 	 */
 	@Test
-	public void testLoadTestsuites() throws JAXBException, SAXException, URISyntaxException {
+	public void testLoadTestsuites() throws URISyntaxException {
 		URL resource = getClass().getResource("/testsuites.xml");
 		File file = new File(resource.toURI());
 		IXsltTest xsltTest = UnMarshallUtil.loadTestDefinition(file);

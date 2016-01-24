@@ -13,7 +13,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -26,7 +25,6 @@ import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
@@ -36,13 +34,14 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.xml.sax.SAXException;
 import org.xmlunit.builder.DiffBuilder;
 import org.xmlunit.builder.Input;
 import org.xmlunit.diff.Diff;
 import org.xmlunit.diff.Difference;
 
-import com.github.kaiwinter.jxsltunit.core.XsltTestError;
+import com.github.kaiwinter.jxsltunit.exception.ProcessingException;
+import com.github.kaiwinter.jxsltunit.exception.ResultWriterException;
+import com.github.kaiwinter.jxsltunit.exception.TestConfigurationException;
 import com.github.kaiwinter.jxsltunit.jaxb.UnMarshallUtil;
 import com.github.kaiwinter.jxsltunit.jaxb.junit.JunitTestsuites;
 import com.github.kaiwinter.jxsltunit.jaxb.junit.JunitTestsuites.JunitTestsuite;
@@ -87,7 +86,7 @@ public final class XsltTestsuite implements IXsltTest {
 	}
 
 	@Override
-	public void process() throws TransformerFactoryConfigurationError, TransformerException, IOException, SAXException {
+	public void process() throws TestConfigurationException, ProcessingException {
 		if (xsltTestcase == null) {
 			throw new IllegalArgumentException("Uninitialized xsltTestcase");
 		} else if (description == null) {
@@ -98,21 +97,25 @@ public final class XsltTestsuite implements IXsltTest {
 
 		boolean valid = validateTestDefinition();
 		if (!valid) {
-			throw new XsltTestError(
+			throw new TestConfigurationException(
 			        "Invalid test configuration: " + junitTestsuite.junitTestcase.get(0).error.systemError);
 		}
 
-		Path tempFileOutput = Files.createTempFile("xslttest", null);
-		LOGGER.trace("Using temp file: '{}'", tempFileOutput);
+		try {
+			Path tempFileOutput = Files.createTempFile("xslttest", null);
+			LOGGER.trace("Using temp file: '{}'", tempFileOutput);
 
-		xslTransformXml(tempFileOutput);
+			xslTransformXml(tempFileOutput);
 
-		runTests(tempFileOutput);
+			runTests(tempFileOutput);
+		} catch (IOException | TransformerException e) {
+			throw new ProcessingException(e);
+		}
 	}
 
 	/**
 	 * Validates the passed test specification for sanity.
-	 * 
+	 *
 	 * @param xsltTest
 	 *            the test specification
 	 * @return
@@ -145,14 +148,13 @@ public final class XsltTestsuite implements IXsltTest {
 
 	/**
 	 * XSL Transforms the XML file.
-	 * 
+	 *
 	 * @param xsltTest
 	 *            the Test specification object
 	 * @param tempFileOutput
 	 *            the temporary file
 	 */
-	private void xslTransformXml(Path tempFileOutput)
-	        throws TransformerFactoryConfigurationError, TransformerException {
+	private void xslTransformXml(Path tempFileOutput) throws TransformerException {
 		Source xmlInput = new StreamSource(new File(xml));
 		Source xsltInput = new StreamSource(new File(xslt));
 		Result xmlOutput = new StreamResult(tempFileOutput.toFile());
@@ -163,11 +165,16 @@ public final class XsltTestsuite implements IXsltTest {
 
 	/**
 	 * Checks the specified tests against the xsl'transformed file.
-	 * 
+	 *
 	 * @param tempFileOutput
 	 *            the temporary file which contains the result of the XSL transformation
+	 *
+	 * @throws IOException
+	 *             if the temp file cannot be accessed
+	 * @throws TestConfigurationException
+	 *             if the test configuration contains errors
 	 */
-	private void runTests(Path tempFileOutput) throws IOException, SAXException {
+	private void runTests(Path tempFileOutput) throws IOException, TestConfigurationException {
 		Objects.requireNonNull(path, "path must not be null");
 
 		// Load transformed file
@@ -177,7 +184,7 @@ public final class XsltTestsuite implements IXsltTest {
 		Elements elementsToTest = document.select(path);
 		if (elementsToTest.isEmpty()) {
 			String message = MessageFormat.format("No data found at path: ''{0}''", path);
-			throw new XsltTestError(message);
+			throw new TestConfigurationException(message);
 		}
 
 		// Iterate test cases
@@ -188,7 +195,7 @@ public final class XsltTestsuite implements IXsltTest {
 				String message = MessageFormat.format(
 				        "Number of matches: {0} (highest index: {1}), test case wants match with index: {2}",
 				        elementsToTest.size(), elementsToTest.size() - 1, element.matchNumber);
-				throw new XsltTestError(message);
+				throw new TestConfigurationException(message);
 			}
 			Element elementXslt = elementsToTest.get(element.matchNumber);
 
@@ -216,7 +223,7 @@ public final class XsltTestsuite implements IXsltTest {
 	}
 
 	@Override
-	public void writeResultAsXml(OutputStream outputStream) throws JAXBException {
+	public void writeResultAsXml(OutputStream outputStream) throws ResultWriterException {
 		JunitTestsuites testsuites = new JunitTestsuites();
 		testsuites.junitTestsuite.add(this.junitTestsuite);
 
@@ -224,7 +231,7 @@ public final class XsltTestsuite implements IXsltTest {
 	}
 
 	@Override
-	public void writeResultAsText(OutputStream outputStream) throws IOException {
+	public void writeResultAsText(OutputStream outputStream) throws ResultWriterException {
 		if (description == null) {
 			writeln(outputStream, "Testsuite 'unnamed'");
 		} else {
@@ -242,15 +249,19 @@ public final class XsltTestsuite implements IXsltTest {
 
 	/**
 	 * Prints the string with a line break to the given stream.
-	 * 
+	 *
 	 * @param outputStream
 	 *            the stream to write on
 	 * @param string
 	 *            the string to write followed by a line break
-	 * @throws IOException
-	 *             if an I/O error occurs
+	 * @throws ResultWriterException
+	 *             if the result of a test cannot be written to the output stream.
 	 */
-	private void writeln(OutputStream outputStream, String string) throws IOException {
-		outputStream.write((string + System.lineSeparator()).getBytes());
+	private void writeln(OutputStream outputStream, String string) throws ResultWriterException {
+		try {
+			outputStream.write((string + System.lineSeparator()).getBytes());
+		} catch (IOException e) {
+			throw new ResultWriterException(e);
+		}
 	}
 }

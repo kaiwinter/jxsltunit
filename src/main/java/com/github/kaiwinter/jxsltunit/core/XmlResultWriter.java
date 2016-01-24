@@ -1,10 +1,8 @@
 package com.github.kaiwinter.jxsltunit.core;
 
-import java.io.IOException;
 import java.io.OutputStream;
 
-import javax.xml.bind.JAXBException;
-
+import com.github.kaiwinter.jxsltunit.exception.ResultWriterException;
 import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.IXsltTest;
 
 /**
@@ -16,7 +14,7 @@ public final class XmlResultWriter implements ResultWriter {
 
 	/**
 	 * Constructs a new {@link XmlResultWriter}.
-	 * 
+	 *
 	 * @param outputStream
 	 *            the {@link OutputStream} to {@link #write(IXsltTest)} to
 	 */
@@ -25,7 +23,7 @@ public final class XmlResultWriter implements ResultWriter {
 	}
 
 	@Override
-	public void write(IXsltTest xsltTest) throws JAXBException, IOException {
+	public void write(IXsltTest xsltTest) throws ResultWriterException {
 		xsltTest.writeResultAsXml(outputStream);
 	}
 

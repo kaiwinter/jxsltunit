@@ -1,19 +1,17 @@
 package com.github.kaiwinter.jxsltunit.jaxb.jxsltunit;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactoryConfigurationError;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.xml.sax.SAXException;
 
+import com.github.kaiwinter.jxsltunit.exception.ProcessingException;
+import com.github.kaiwinter.jxsltunit.exception.ResultWriterException;
+import com.github.kaiwinter.jxsltunit.exception.TestConfigurationException;
 import com.github.kaiwinter.jxsltunit.jaxb.UnMarshallUtil;
 import com.github.kaiwinter.jxsltunit.jaxb.junit.JunitTestsuites;
 
@@ -30,7 +28,7 @@ public final class XsltTestsuites implements IXsltTest {
 	public List<XsltTestsuite> xsltTestsuite;
 
 	@Override
-	public void process() throws TransformerFactoryConfigurationError, TransformerException, IOException, SAXException {
+	public void process() throws TestConfigurationException, ProcessingException {
 		LOGGER.info("Running test suite, number of test cases: {}", xsltTestsuite.size());
 		for (XsltTestsuite test : xsltTestsuite) {
 			test.process();
@@ -38,7 +36,7 @@ public final class XsltTestsuites implements IXsltTest {
 	}
 
 	@Override
-	public void writeResultAsXml(OutputStream outputStream) throws JAXBException {
+	public void writeResultAsXml(OutputStream outputStream) throws ResultWriterException {
 		JunitTestsuites testsuites = new JunitTestsuites();
 		for (XsltTestsuite xsltTest : this.xsltTestsuite) {
 			testsuites.junitTestsuite.add(xsltTest.junitTestsuite);
@@ -48,7 +46,7 @@ public final class XsltTestsuites implements IXsltTest {
 	}
 
 	@Override
-	public void writeResultAsText(OutputStream outputStream) throws IOException {
+	public void writeResultAsText(OutputStream outputStream) throws ResultWriterException {
 		for (XsltTestsuite xsltTest : this.xsltTestsuite) {
 			xsltTest.writeResultAsText(outputStream);
 		}

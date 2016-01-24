@@ -1,17 +1,11 @@
 package com.github.kaiwinter.jxsltunit.jaxb.jxsltunit;
 
-import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactoryConfigurationError;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.xml.sax.SAXException;
 
-import com.github.kaiwinter.jxsltunit.core.XsltTestError;
-import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.XsltTestsuite;
+import com.github.kaiwinter.jxsltunit.exception.TestConfigurationException;
 import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.XsltTestsuite.XsltTestcase;
 
 public final class XsltTestsuiteTest {
@@ -20,8 +14,7 @@ public final class XsltTestsuiteTest {
 	 * A successful test with no error.
 	 */
 	@Test
-	public void testProcessValid()
-	        throws TransformerFactoryConfigurationError, TransformerException, IOException, SAXException {
+	public void testProcessValid() {
 		XsltTestsuite testsuite = new XsltTestsuite();
 		testsuite.xml = getClass().getResource("/min-test.xml").getFile();
 		testsuite.xslt = getClass().getResource("/min-test.xslt").getFile();
@@ -41,9 +34,8 @@ public final class XsltTestsuiteTest {
 	/**
 	 * Failing test. Defines a third matching element which is not in the result.
 	 */
-	@Test(expected = XsltTestError.class)
-	public void testProcessTestcaseNotFound()
-	        throws TransformerFactoryConfigurationError, TransformerException, IOException, SAXException {
+	@Test(expected = TestConfigurationException.class)
+	public void testProcessTestcaseNotFound() {
 		XsltTestsuite testsuite = new XsltTestsuite();
 		testsuite.xml = getClass().getResource("/min-test.xml").getFile();
 		testsuite.xslt = getClass().getResource("/min-test.xslt").getFile();
@@ -63,9 +55,8 @@ public final class XsltTestsuiteTest {
 	/**
 	 * Failing test. Path in the result XML not found.
 	 */
-	@Test(expected = XsltTestError.class)
-	public void testProcessPathNotFound()
-	        throws TransformerFactoryConfigurationError, TransformerException, IOException, SAXException {
+	@Test(expected = TestConfigurationException.class)
+	public void testProcessPathNotFound() {
 		XsltTestsuite testsuite = new XsltTestsuite();
 		testsuite.xml = getClass().getResource("/min-test.xml").getFile();
 		testsuite.xslt = getClass().getResource("/min-test.xslt").getFile();
@@ -85,9 +76,8 @@ public final class XsltTestsuiteTest {
 	/**
 	 * Failing test. Invalid configuration, xml missing.
 	 */
-	@Test(expected = XsltTestError.class)
-	public void testProcessMissingXml()
-	        throws TransformerFactoryConfigurationError, TransformerException, IOException, SAXException {
+	@Test(expected = TestConfigurationException.class)
+	public void testProcessMissingXml() {
 		XsltTestsuite testsuite = new XsltTestsuite();
 		testsuite.xml = "";
 		testsuite.xslt = getClass().getResource("/min-test.xslt").getFile();
@@ -104,9 +94,8 @@ public final class XsltTestsuiteTest {
 	/**
 	 * Failing test. Invalid configuration, xslt missing.
 	 */
-	@Test(expected = XsltTestError.class)
-	public void testProcessMissingXslt()
-	        throws TransformerFactoryConfigurationError, TransformerException, IOException, SAXException {
+	@Test(expected = TestConfigurationException.class)
+	public void testProcessMissingXslt() {
 		XsltTestsuite testsuite = new XsltTestsuite();
 		testsuite.xml = getClass().getResource("/min-test.xml").getFile();
 		testsuite.xslt = "";
@@ -124,8 +113,7 @@ public final class XsltTestsuiteTest {
 	 * Failing test. Difference in transformed XML.
 	 */
 	@Test
-	public void testProcessDiffInResult()
-	        throws TransformerFactoryConfigurationError, TransformerException, IOException, SAXException {
+	public void testProcessDiffInResult() {
 		XsltTestsuite testsuite = new XsltTestsuite();
 		testsuite.xml = getClass().getResource("/min-test.xml").getFile();
 		testsuite.xslt = getClass().getResource("/min-test.xslt").getFile();
