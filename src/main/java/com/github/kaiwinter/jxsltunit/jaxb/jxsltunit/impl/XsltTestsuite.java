@@ -1,4 +1,4 @@
-package com.github.kaiwinter.jxsltunit.jaxb.jxsltunit;
+package com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.impl;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,6 +46,7 @@ import com.github.kaiwinter.jxsltunit.jaxb.UnMarshallUtil;
 import com.github.kaiwinter.jxsltunit.jaxb.junit.JunitTestsuites;
 import com.github.kaiwinter.jxsltunit.jaxb.junit.JunitTestsuites.JunitTestsuite;
 import com.github.kaiwinter.jxsltunit.jaxb.junit.JunitTestsuites.JunitTestsuite.JunitTestcase;
+import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.IXsltTest;
 
 /**
  * Java representation of the XML test configuration.

@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.XsltTestsuites;
+import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.impl.XsltTestsuites;
 
 /**
  * Data structure which is filled with the result of a {@link XsltTestsuites} and is used to be marshaled as a junit

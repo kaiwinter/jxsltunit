@@ -21,8 +21,8 @@ import com.github.kaiwinter.jxsltunit.exception.ResultWriterException;
 import com.github.kaiwinter.jxsltunit.exception.TestConfigurationException;
 import com.github.kaiwinter.jxsltunit.jaxb.junit.JunitTestsuites;
 import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.IXsltTest;
-import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.XsltTestsuite;
-import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.XsltTestsuites;
+import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.impl.XsltTestsuite;
+import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.impl.XsltTestsuites;
 
 public final class UnMarshallUtil {
 

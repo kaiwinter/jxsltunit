@@ -12,9 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.github.kaiwinter.jxsltunit.core.ResultWriter;
-import com.github.kaiwinter.jxsltunit.core.TextResultWriter;
-import com.github.kaiwinter.jxsltunit.core.XmlResultWriter;
-import com.github.kaiwinter.jxsltunit.core.XsltTestUc;
+import com.github.kaiwinter.jxsltunit.core.impl.TextResultWriter;
+import com.github.kaiwinter.jxsltunit.core.impl.XmlResultWriter;
+import com.github.kaiwinter.jxsltunit.core.impl.XsltTestUc;
 
 public class Main {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Main.class.getSimpleName());

@@ -1,11 +1,12 @@
-package com.github.kaiwinter.jxsltunit.core;
+package com.github.kaiwinter.jxsltunit.core.impl;
 
 import java.io.File;
 
+import com.github.kaiwinter.jxsltunit.core.ResultWriter;
 import com.github.kaiwinter.jxsltunit.jaxb.UnMarshallUtil;
 import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.IXsltTest;
-import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.XsltTestsuite;
-import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.XsltTestsuites;
+import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.impl.XsltTestsuite;
+import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.impl.XsltTestsuites;
 
 /**
  * Use case class which loads an XSLT test definition, runs it and outputs the result.

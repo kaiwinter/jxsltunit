@@ -1,4 +1,4 @@
-package com.github.kaiwinter.jxsltunit.jaxb.jxsltunit;
+package com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.impl;
 
 import java.util.ArrayList;
 
@@ -6,7 +6,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.github.kaiwinter.jxsltunit.exception.TestConfigurationException;
-import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.XsltTestsuite.XsltTestcase;
+import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.impl.XsltTestsuite;
+import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.impl.XsltTestsuite.XsltTestcase;
 
 public final class XsltTestsuiteTest {
 

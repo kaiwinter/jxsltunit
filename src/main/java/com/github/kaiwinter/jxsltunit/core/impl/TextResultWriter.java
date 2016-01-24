@@ -1,30 +1,30 @@
-package com.github.kaiwinter.jxsltunit.core;
+package com.github.kaiwinter.jxsltunit.core.impl;
 
 import java.io.OutputStream;
 
+import com.github.kaiwinter.jxsltunit.core.ResultWriter;
 import com.github.kaiwinter.jxsltunit.exception.ResultWriterException;
 import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.IXsltTest;
 
 /**
- * Writes the result in Junit´s XML format.
+ * Writes the result as plain text.
  */
-public final class XmlResultWriter implements ResultWriter {
+public final class TextResultWriter implements ResultWriter {
 
 	private final OutputStream outputStream;
 
 	/**
-	 * Constructs a new {@link XmlResultWriter}.
+	 * Constructs a new {@link TextResultWriter}.
 	 *
 	 * @param outputStream
 	 *            the {@link OutputStream} to {@link #write(IXsltTest)} to
 	 */
-	public XmlResultWriter(OutputStream outputStream) {
+	public TextResultWriter(OutputStream outputStream) {
 		this.outputStream = outputStream;
 	}
 
 	@Override
 	public void write(IXsltTest xsltTest) throws ResultWriterException {
-		xsltTest.writeResultAsXml(outputStream);
+		xsltTest.writeResultAsText(outputStream);
 	}
-
 }

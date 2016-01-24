@@ -5,6 +5,8 @@ import java.io.OutputStream;
 import com.github.kaiwinter.jxsltunit.exception.ProcessingException;
 import com.github.kaiwinter.jxsltunit.exception.ResultWriterException;
 import com.github.kaiwinter.jxsltunit.exception.TestConfigurationException;
+import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.impl.XsltTestsuite;
+import com.github.kaiwinter.jxsltunit.jaxb.jxsltunit.impl.XsltTestsuites;
 
 /**
  * Java representation of the XML test configuration. This can either be a single {@link XsltTestsuite} or a
