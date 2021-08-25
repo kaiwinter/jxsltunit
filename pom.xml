@@ -5,7 +5,7 @@
 
 	<groupId>com.github.kaiwinter</groupId>
 	<artifactId>jxsltunit</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 
 	<name>jXSLTunit</name>
 	<description>Unit test your XSL Transformations</description>
